@@ -1,0 +1,40 @@
+#WeatherLogo{
+    width:276px;
+    height:200px;
+    margin:50px 50px;
+}
+
+#ChooseCityLabel{
+    color:black;
+    font-size:20px;
+    font-weight:bolder;
+    margin:10px 10px;
+}
+
+#SearchBox{
+    display:flex;
+    flex-direction:row;
+    border:grey solid 1px;
+    border-radius:2px;
+    color:black;
+    font-size:25px;
+    font-weight:bold;
+    margin:20px auto;
+}
+#SearchBox>input{
+    padding:10px;
+    font-size:14px;
+    border:none;
+    outline:none;
+    font-weight:bold;
+}
+#SearchBox>button{
+    color:white;
+    background-color:black;
+    padding:10px;
+    font-size:14px;
+    border:none;
+    outline:none;
+    font-weight:bold;
+    cursor:pointer;
+}

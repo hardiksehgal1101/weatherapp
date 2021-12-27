@@ -1,24 +1,45 @@
-import logo from './logo.svg';
+import React, { useState } from "react";
+import Axios from "axios";
 import './App.css';
+import CityComponent from "./modules/CityComponent";
+import WeatherComponent from "./modules/WeatherComponent";
+
+
+const AppId = "fe4feefa8543e06d4f3c66d92c61b69c";
 
 function App() {
+  const [city, updateCity] = useState();
+  const [weather, updateWeather] = useState();
+  const [aqi, updateaqi] = useState();
+  const fetchWeather = async (e) => {
+    e.preventDefault();
+    const response = await Axios.get(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${AppId}`,
+      
+    );
+    const lat = response.data.coord.lat;
+    const lon = response.data.coord.lon;
+    const rawData = await  Axios.get(
+      `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${AppId}`,
+    );
+    updateWeather(response.data);
+    updateaqi(rawData.data.list[0]);
+    console.log(rawData.data.list[0]);
+    
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+    <container id="Container">
+      <span id="AppLabel">Weather App</span>
+      {city && weather ? (
+        <WeatherComponent weather={weather} city={city} aqi={aqi} />
+      ) : 
+     
+       (
+        <CityComponent updateCity={updateCity} fetchWeather={fetchWeather} />
+      )}
+      
+    </container>
   );
 }
 
