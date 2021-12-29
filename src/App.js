@@ -20,7 +20,7 @@ function App() {
     const lat = response.data.coord.lat;
     const lon = response.data.coord.lon;
     const rawData = await  Axios.get(
-      `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${AppId}`,
+      `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${AppId}`,
     );
     updateWeather(response.data);
     updateaqi(rawData.data.list[0]);
