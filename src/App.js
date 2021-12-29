@@ -38,7 +38,7 @@ function App() {
        (
         <CityComponent updateCity={updateCity} fetchWeather={fetchWeather} />
       )}
-      
+      <div id="copyright">©Hardiksehgal</div>
     </container>
   );
 }

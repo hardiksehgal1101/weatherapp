@@ -6,7 +6,7 @@
   padding: 10px 10px;
   margin: auto;
   border-radius: 4px;
-  box-shadow: 0 3px 6px 0 #555;
+  box-shadow: 0 3px 10px 0 rgb(20, 20, 20);
   background: white;
   font-family: Montserrat;
 }
@@ -16,4 +16,9 @@
   font-size: 18px;
   font-weight: bold;
 
+}
+#copyright{
+  align-items: flex-start;
+  font-size: 12px;
+  padding: 10px;
 }
