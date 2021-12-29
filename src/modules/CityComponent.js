@@ -7,7 +7,7 @@ const CityComponent = (props) => {
   const { updateCity, fetchWeather } = props;
   return (
     <>
-      <img id="WeatherLogo" src={perfectday} />
+      <img alt="weatherlogo" id="WeatherLogo" src={perfectday} />
       <span id="ChooseCityLabel">Find Weather of your city</span>
       <form id="SearchBox" onSubmit={fetchWeather}>
         <input

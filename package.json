@@ -1,8 +1,8 @@
 {
   "name": "weatherapp",
   "version": "0.1.0",
-  "private": true,
-  "homepage": "https://github.com/hardiksehgal1101/WeatherApp",
+  "private": false,
+  "homepage": "https://github.com/hardiksehgal1101/weatherapp",
   "dependencies": {
     "axios": "^0.24.0",
     "moment": "^2.29.1",

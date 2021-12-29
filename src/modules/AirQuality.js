@@ -5,7 +5,7 @@ const WeatherInfoComponent = (props) => {
   const {name, value} = props;
   return (
       <container id="InfoContainer">
-          <img id="InfoIcon" src={pressure}/>
+          <img alt="aqiinfologo" id="InfoIcon" src={pressure}/>
           <span id="InfoLabel">
               {value}
               <span>{name}</span>
