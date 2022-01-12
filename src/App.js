@@ -17,6 +17,7 @@ function App() {
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${AppId}`,
       
     );
+    console.log(response.data.weather[0]);
     const lat = response.data.coord.lat;
     const lon = response.data.coord.lon;
     const rawData = await  Axios.get(

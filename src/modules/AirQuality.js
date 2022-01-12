@@ -57,7 +57,7 @@ const AirQuality = (props) =>{
 
 })()}</div>
 
-        <container id="WeatherInfoContainer">
+        <container id="aqInfoContainer">
             <WeatherInfoComponent name={"Carbon Monoxide"}
                                   value={aqi?.components?.co + " µg/m³"}/>
             <WeatherInfoComponent name={"ammonia"} value={aqi?.components?.nh3 + " µg/m³"}/>

@@ -9,7 +9,7 @@
   background: white;
   font-family: Montserrat;
 }
-#WeatherInfoContainer{
+#aqInfoContainer{
 display: flex;
 width: 90%;
 flex-direction: row;

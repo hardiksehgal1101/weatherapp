@@ -3,12 +3,36 @@ import './WeatherComponent.css'
 import pressure from "../icons/dot3.svg"
 import AirQuality from "./AirQuality";
 
+const WeatherIcons = {
+    "01d": "../icons/sunny.svg",
+    "01n": "../icons/night.svg",
+    "02d": "../icons/day.svg",
+    "02n": "../icons/cloudy-night.svg",
+    "03d": "../icons/cloudy.svg",
+    "03n": "../icons/cloudy.svg",
+    "04d": "../icons/perfect-day.svg",
+    "04n": "../icons/cloudy-night.svg",
+    "09d": "../icons/rain.svg",
+    "09n": "../icons/rain-night.svg",
+    "10d": "../icons/rain.svg",
+    "10n": "../icons/rain-night.svg",
+    "11d": "../icons/storm.svg",
+    "11n": "../icons/storm.svg",
+  };
+
+  const WeatherInfoIcons = {
+    sunset: "../icons/temp.svg",
+    sunrise: "../icons/temp.svg",
+    humidity: "../icons/humidity.svg",
+    wind: "../icons/wind.svg",
+    pressure: "../icons/pressure.svg",
+};
 
 const WeatherInfoComponent = (props) => {
     const {name, value} = props;
     return (
         <container id="InfoContainer">
-            <img alt="weatherinfologo" id="InfoIcon" src={pressure}/>
+            <img alt="weatherinfologo" id="InfoIcon" src={WeatherInfoIcons[name]}/>
             <span id="InfoLabel">
                 {value}
                 <span>{name}</span>
@@ -28,6 +52,8 @@ const WeatherComponent = (props) => {
 
 
     }
+    const icon = weather.weather[0].icon;
+    console.log(icon);
     console.log(booten);
     
     return (
@@ -37,8 +63,12 @@ const WeatherComponent = (props) => {
                 <container id="condition">
                     <span>{`${Math.floor(weather?.main?.temp - 273)}°C`}</span>
                     {`  |  ${weather?.weather[0].description}`}
+                    <img src={WeatherIcons[icon]}/>
                 </container>
+                
             </container>
+            
+
             <span id="Location">{`${weather?.name}, ${weather?.sys?.country}`}</span>
 
             <span id="WeatherInfoLabel">Weather Info</span>

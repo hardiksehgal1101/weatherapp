@@ -11,22 +11,30 @@
 }
 
 #condition{
-    margin: 20px auto;
+    margin: auto;
     text-transform: capitalize;
     font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#condition >img{
+    padding: 10px;
+    align-items: center;
 }
 #condition>span{
     font-size: 28px;
 }
 
 #aqiButton{
-    font-size: 1.5rem;
-    border:none;
-    color:white;
-    background-color:black;
-    border-radius:10px;
-    padding:10px;
-    cursor: pointer;
+    text-decoration: none;
+  border: 2px solid #010100;
+  padding: 15px;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  display: inline-block;
 }
 
 #WeatherInfoContainer{
@@ -36,6 +44,7 @@
   justify-content: space-around ;
   align-items: center;
   flex-wrap: wrap;
+  font-weight: 500;
 }
 
 #Location{
@@ -104,3 +113,14 @@
 #severe{
     color: brown;
 }
+#aqInfoContainer{
+    display: flex;
+    width: 90%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #80808023;
+    border-radius: 10px;
+    border: 2px dotted grey;
+    }
