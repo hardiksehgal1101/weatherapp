@@ -72,6 +72,7 @@ const WeatherComponent = (props) => {
             <span id="Location">{`${weather?.name}, ${weather?.sys?.country}`}</span>
 
             <span id="WeatherInfoLabel">Weather Info</span>
+            
             <container id="WeatherInfoContainer">
                 <WeatherInfoComponent name={isDay ? "sunset" : "sunrise"}
                                       value={`${getTime(weather?.sys[isDay ? "sunset" : "sunrise"])}` + " hrs"}/>
@@ -79,8 +80,12 @@ const WeatherComponent = (props) => {
                 <WeatherInfoComponent name={"wind"} value={weather?.wind?.speed + " m/s"}/>
                 <WeatherInfoComponent name={"pressure"} value={weather?.main?.pressure + " hPa"}/>
                 </container>
-                <button id="aqiButton" onClick={() => setbooten(true)}>What's the air like?</button>
-            {booten ? (<AirQuality aqi={aqi}/>) : null}
+                <button id="aqiButton" onClick={() => setbooten(true)}>What's the air like <lord-icon
+    src="https://cdn.lordicon.com/njjuilvq.json"
+    trigger="loop"
+    delay="3000">
+</lord-icon></button>
+                {booten ? (<AirQuality aqi={aqi}/>) : null}
             
             </>
             

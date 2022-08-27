@@ -7,15 +7,20 @@ const CityComponent = (props) => {
   const { updateCity, fetchWeather } = props;
   return (
     <>
-      <img alt="weatherlogo" id="WeatherLogo" src={perfectday} />
+      {/*  */}
       <span id="ChooseCityLabel">Find Weather of your city</span>
+      
       <form id="SearchBox" onSubmit={fetchWeather}>
-        <input
+        <input 
           onChange={(e) => updateCity(e.target.value)}
-          placeholder="City"
+          placeholder="Enter City"
         />
-        <button type={"submit"}>Search</button>
+        <button type={"submit"}><lord-icon
+    src="https://cdn.lordicon.com/pvbutfdk.json"
+    trigger="hover">
+</lord-icon></button>
       </form>
+      <img alt="weatherlogo" id="WeatherLogo" src={perfectday} />
     </>
   );
 };

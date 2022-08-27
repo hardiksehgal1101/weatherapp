@@ -31,7 +31,11 @@ function App() {
   return (
 
     <container id="Container">
-      <span id="AppLabel">Weather App</span>
+      <span id="AppLabel">Weather App <lord-icon
+    src="https://cdn.lordicon.com/uvextprq.json"
+    trigger="loop"
+    delay="3000">
+      </lord-icon></span>
       {city && weather ? (
         <WeatherComponent weather={weather} city={city} aqi={aqi} />
       ) : 
@@ -41,6 +45,7 @@ function App() {
       )}
       <div id="copyright">©Hardiksehgal</div>
     </container>
+    
   );
 }
 

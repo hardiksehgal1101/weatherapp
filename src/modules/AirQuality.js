@@ -19,7 +19,6 @@ const AirQuality = (props) =>{
   console.log(aqi);
     return (
         <>
-        
         <div id="aqcondition">
         {(() => {
   

@@ -14,12 +14,13 @@
 #SearchBox{
     display:flex;
     flex-direction:row;
-    border:grey solid 1px;
-    border-radius:2px;
+    border-radius:10px;
     color:black;
     font-size:25px;
     font-weight:bold;
     margin:20px auto;
+    background-color: lavender;
+    border-radius: 16px;
 }
 #SearchBox>input{
     padding:10px;
@@ -27,14 +28,16 @@
     border:none;
     outline:none;
     font-weight:bold;
+    border: none;
+    background-color: lavender;
+    border-radius: 20px;
 }
 #SearchBox>button{
-    color:white;
-    background-color:black;
     padding:10px;
     font-size:14px;
     border:none;
     outline:none;
     font-weight:bold;
     cursor:pointer;
+    border-radius: 0px 16px 16px 0px;
 }
