@@ -4,20 +4,20 @@ import pressure from "../icons/dot3.svg"
 import AirQuality from "./AirQuality";
 
 const WeatherIcons = {
-    "01d": "../icons/sunny.svg",
-    "01n": "../icons/night.svg",
-    "02d": "../icons/day.svg",
-    "02n": "../icons/cloudy-night.svg",
-    "03d": "../icons/cloudy.svg",
-    "03n": "../icons/cloudy.svg",
-    "04d": "../icons/perfect-day.svg",
-    "04n": "../icons/cloudy-night.svg",
-    "09d": "../icons/rain.svg",
-    "09n": "../icons/rain-night.svg",
-    "10d": "../icons/rain.svg",
-    "10n": "../icons/rain-night.svg",
-    "11d": "../icons/storm.svg",
-    "11n": "../icons/storm.svg",
+    "01d": "../icons/sunny.png",
+    "01n": "../icons/night.png",
+    "02d": "../icons/day.png",
+    "02n": "../icons/cloudy-night.png",
+    "03d": "../icons/cloudy.png",
+    "03n": "../icons/cloudy.png",
+    "04d": "../icons/perfect-day.png",
+    "04n": "../icons/cloudy-night.png",
+    "09d": "../icons/rain.png",
+    "09n": "../icons/rain-night.png",
+    "10d": "../icons/rain.png",
+    "10n": "../icons/rain-night.png",
+    "11d": "../icons/storm.png",
+    "11n": "../icons/storm.png"
   };
 
   const WeatherInfoIcons = {
@@ -63,7 +63,7 @@ const WeatherComponent = (props) => {
                 <container id="condition">
                     <span>{`${Math.floor(weather?.main?.temp - 273)}°C`}</span>
                     {`  |  ${weather?.weather[0].description}`}
-                    <img src={WeatherIcons[icon]}/>
+                    <img className="side-icon" src={WeatherIcons[icon]}/>
                 </container>
                 
             </container>
