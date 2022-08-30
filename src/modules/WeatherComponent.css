@@ -13,19 +13,28 @@
 #condition{
     margin: auto;
     text-transform: capitalize;
-    font-size: 14px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
+}
+.temperature{
+    font-size: 40px;
+}
+.weather-desc{
+    display: flex;
+    align-items: center;
+    margin: 4px;
+    font-size: 20px;
+}
+#condition>div{
+    display: flex;
+    align-items: center;
 }
 #condition >img{
     padding: 10px;
     align-items: center;
 }
-#condition>span{
-    font-size: 28px;
-}
-
 #aqiButton{
   text-decoration: none;
   border: none;

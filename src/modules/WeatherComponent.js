@@ -61,9 +61,10 @@ const WeatherComponent = (props) => {
            <>
            <container id="tempContainer">
                 <container id="condition">
-                    <span>{`${Math.floor(weather?.main?.temp - 273)}°C`}</span>
-                    {`  |  ${weather?.weather[0].description}`}
-                    <img className="side-icon" src={WeatherIcons[icon]}/>
+                    <span className="temperature">{`${Math.floor(weather?.main?.temp - 273)}°C`}</span>
+                    <div className="weather-desc">
+                    {`${weather?.weather[0].description}`}
+                    <img className="side-icon" src={WeatherIcons[icon]}/></div>
                 </container>
                 
             </container>
