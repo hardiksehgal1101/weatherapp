@@ -31,7 +31,7 @@ function App() {
   return (
 
     <container id="Container">
-      <span id="AppLabel">Weather App <lord-icon
+      <span id="AppLabel">Weathernest<lord-icon
     src="https://cdn.lordicon.com/uvextprq.json"
     trigger="loop"
     delay="3000">
