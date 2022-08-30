@@ -72,7 +72,6 @@ const WeatherComponent = (props) => {
 
             <span id="Location">{`${weather?.name}, ${weather?.sys?.country}`}</span>
 
-            <span id="WeatherInfoLabel">Weather Info</span>
             
             <container id="WeatherInfoContainer">
                 <WeatherInfoComponent name={isDay ? "sunset" : "sunrise"}
@@ -84,7 +83,7 @@ const WeatherComponent = (props) => {
                 <button id="aqiButton" onClick={() => setbooten(true)}>What's the air like <lord-icon
     src="https://cdn.lordicon.com/njjuilvq.json"
     trigger="loop"
-    delay="3000">
+    delay="1000">
 </lord-icon></button>
                 {booten ? (<AirQuality aqi={aqi}/>) : null}
             

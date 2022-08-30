@@ -1,5 +1,5 @@
 import React from 'react'
-import pressure from "../icons/dot3.svg"
+import pressure from "../icons/point.svg"
 
 const WeatherInfoComponent = (props) => {
   const {name, value} = props;
