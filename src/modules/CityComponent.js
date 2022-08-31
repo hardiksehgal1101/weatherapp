@@ -1,6 +1,6 @@
 import React from 'react'
 import './CityComponent.css'
-import perfectday from "..//icons/4.png"
+import perfectday from "..//icons/main.gif"
 
 
 const CityComponent = (props) => {
@@ -8,9 +8,8 @@ const CityComponent = (props) => {
   return (
     <>
       {/*  */}
-      <span id="ChooseCityLabel">Find Weather of your city</span>
       
-      <form id="SearchBox" onSubmit={fetchWeather}>
+      {/* <form id="SearchBox" onSubmit={fetchWeather}>
         <input 
           onChange={(e) => updateCity(e.target.value)}
           placeholder="Enter City"
@@ -19,7 +18,7 @@ const CityComponent = (props) => {
     src="https://cdn.lordicon.com/pvbutfdk.json"
     trigger="hover">
 </lord-icon></button>
-      </form>
+      </form> */}
       <img alt="weatherlogo" id="WeatherLogo" src={perfectday} />
     </>
   );

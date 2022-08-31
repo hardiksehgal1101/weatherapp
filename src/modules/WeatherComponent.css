@@ -143,6 +143,7 @@
  .side-icon{
     height: 40px;
     width: auto;
+    margin-left: 8px;
  }
 /* desktop */
  @media screen and (min-width: 480px) {

@@ -1,6 +1,5 @@
 import React,{useState} from "react";
 import './WeatherComponent.css'
-import pressure from "../icons/dot3.svg"
 import AirQuality from "./AirQuality";
 
 const WeatherIcons = {
@@ -26,6 +25,7 @@ const WeatherIcons = {
     humidity: "../icons/humidity.svg",
     wind: "../icons/wind.svg",
     pressure: "../icons/pressure.svg",
+    temperature: "../icons/temperature.svg",
 };
 
 const WeatherInfoComponent = (props) => {
@@ -44,8 +44,9 @@ const WeatherInfoComponent = (props) => {
 
 const WeatherComponent = (props) => {
     let [booten, setbooten] = useState(false);
+    const { updateCity, fetchWeather } = props;
     const {weather} = props;
-    const {aqi} = props; 
+    const {aqi} = props;
     const isDay = weather?.weather[0].icon?.includes('d')
     const getTime = (timeStamp) => {
         return `${new Date(timeStamp * 1000).getHours()} : ${new Date(timeStamp * 1000).getMinutes()}`
@@ -53,8 +54,8 @@ const WeatherComponent = (props) => {
 
     }
     const icon = weather.weather[0].icon;
-    console.log(icon);
-    console.log(booten);
+
+
     
     return (
         

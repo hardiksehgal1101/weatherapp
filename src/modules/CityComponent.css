@@ -1,6 +1,6 @@
 #WeatherLogo{
-    width:276px;
-    height:200px;
+    width:90%;
+    height:auto;
     margin:50px 50px;
 }
 
@@ -40,4 +40,13 @@
     font-weight:bold;
     cursor:pointer;
     border-radius: 0px 16px 16px 0px;
+}
+
+@media screen and (min-width: 480px) {
+    #WeatherLogo{
+        height: 400px;
+        width: auto;
+        margin: 0;
+    }
+    
 }

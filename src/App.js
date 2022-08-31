@@ -11,21 +11,30 @@ function App() {
   const [city, updateCity] = useState();
   const [weather, updateWeather] = useState();
   const [aqi, updateaqi] = useState();
+  const [forecast, updateforecast] = useState();
   const fetchWeather = async (e) => {
     e.preventDefault();
+    
     const response = await Axios.get(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${AppId}`,
       
     );
-    console.log(response.data.weather[0]);
     const lat = response.data.coord.lat;
     const lon = response.data.coord.lon;
+    const forecast = await Axios.get(
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${AppId}&units=metric`,
+    );
+      console.log(forecast.data);
+    
     const rawData = await  Axios.get(
       `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${AppId}`,
     );
+    // 3 day forecast
+    
+
     updateWeather(response.data);
     updateaqi(rawData.data.list[0]);
-    console.log(rawData.data.list[0]);
+    updateforecast(forecast.data);
     
   };
   return (
@@ -36,8 +45,18 @@ function App() {
     trigger="loop"
     delay="3000">
       </lord-icon></span>
+      <form id="SearchBox" onSubmit={fetchWeather}>
+        <input required
+          onChange={(e) => updateCity(" "+e.target.value)}
+          placeholder="Enter City"
+        />
+        <button type={"submit"} ><lord-icon
+    src="https://cdn.lordicon.com/pvbutfdk.json"
+    trigger="hover">
+</lord-icon></button>
+      </form>
       {city && weather ? (
-        <WeatherComponent weather={weather} city={city} aqi={aqi} />
+        <WeatherComponent weather={weather} city={city} aqi={aqi} forecast={forecast}/>
       ) : 
      
        (
