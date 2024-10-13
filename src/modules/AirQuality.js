@@ -1,5 +1,5 @@
 import React from 'react'
-import pressure from "../icons/point.svg"
+import pressure from '../../src/icons/bullet.png'
 
 const WeatherInfoComponent = (props) => {
   const {name, value} = props;
@@ -25,32 +25,32 @@ const AirQuality = (props) =>{
   switch (aqi?.main?.aqi) {
      case 1:
          return (
-           <div id="good">Good</div>
+           <div id="good">Healthy Air</div>
          )
     case 2:
          return (
-           <div id="satisfactory">Satifactory</div>
+           <div id="satisfactory">Acceptable Air</div>
          )
     case 3:
          return (
-           <div id="moderate">Moderate</div>
+           <div id="moderate">Watch out!</div>
          )
     case 4:
          return (
-           <div id="poor">Poor</div>
+           <div id="poor">Unhealthy Air</div>
          )
          
      case 5:
          return (
-           <div id="verypoor">Very Poor</div>
+           <div id="verypoor">Hazardous Air</div>
          )
          case 6:
          return (
-           <div id="severe">Severe</div>
+           <div id="severe">Severe Danger</div>
          )
      default:
          return (
-           <div>Try Again Later</div>
+           <div>AQI Unavailable</div>
          )
   }
 

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import './WeatherComponent.css'
 import AirQuality from "./AirQuality";
 
@@ -17,9 +17,9 @@ const WeatherIcons = {
     "10n": "../icons/rain-night.png",
     "11d": "../icons/storm.png",
     "11n": "../icons/storm.png"
-  };
+};
 
-  const WeatherInfoIcons = {
+const WeatherInfoIcons = {
     sunset: "../icons/temp.svg",
     sunrise: "../icons/temp.svg",
     humidity: "../icons/humidity.svg",
@@ -29,10 +29,10 @@ const WeatherIcons = {
 };
 
 const WeatherInfoComponent = (props) => {
-    const {name, value} = props;
+    const { name, value } = props;
     return (
         <container id="InfoContainer">
-            <img alt="weatherinfologo" id="InfoIcon" src={WeatherInfoIcons[name]}/>
+            <img alt="weatherinfologo" id="InfoIcon" src={WeatherInfoIcons[name]} />
             <span id="InfoLabel">
                 {value}
                 <span>{name}</span>
@@ -44,9 +44,8 @@ const WeatherInfoComponent = (props) => {
 
 const WeatherComponent = (props) => {
     let [booten, setbooten] = useState(false);
-    const { updateCity, fetchWeather } = props;
-    const {weather} = props;
-    const {aqi} = props;
+    const { weather } = props;
+    const { aqi } = props;
     const isDay = weather?.weather[0].icon?.includes('d')
     const getTime = (timeStamp) => {
         return `${new Date(timeStamp * 1000).getHours()} : ${new Date(timeStamp * 1000).getMinutes()}`
@@ -56,43 +55,46 @@ const WeatherComponent = (props) => {
     const icon = weather.weather[0].icon;
 
 
-    
+
     return (
-        
-           <>
-           <container id="tempContainer">
+
+        <>
+            <container id="tempContainer">
                 <container id="condition">
-                    <span className="temperature">{`${Math.floor(weather?.main?.temp - 273)}°C`}</span>
+                    <span className="temperature">{`${Math.floor(weather?.main?.temp)}°C`}</span>
                     <div className="weather-desc">
-                    {`${weather?.weather[0].description}`}
-                    <img className="side-icon" src={WeatherIcons[icon]}/></div>
+                        {`${weather?.weather[0].description}`}
+                        <img className="side-icon" src={WeatherIcons[icon]} /></div>
                 </container>
-                
+
             </container>
-            
+
 
             <span id="Location">{`${weather?.name}, ${weather?.sys?.country}`}</span>
 
-            
+
             <container id="WeatherInfoContainer">
                 <WeatherInfoComponent name={isDay ? "sunset" : "sunrise"}
-                                      value={`${getTime(weather?.sys[isDay ? "sunset" : "sunrise"])}` + " hrs"}/>
-                <WeatherInfoComponent name={"humidity"} value={weather?.main?.humidity + " %"}/>
-                <WeatherInfoComponent name={"wind"} value={weather?.wind?.speed + " m/s"}/>
-                <WeatherInfoComponent name={"pressure"} value={weather?.main?.pressure + " hPa"}/>
-                </container>
-                <button id="aqiButton" onClick={() => setbooten(true)}>What's the air like <lord-icon
-    src="https://cdn.lordicon.com/njjuilvq.json"
-    trigger="loop"
-    delay="1000">
-</lord-icon></button>
-                {booten ? (<AirQuality aqi={aqi}/>) : null}
+                    value={`${getTime(weather?.sys[isDay ? "sunset" : "sunrise"])}` + " hrs"} />
+                <WeatherInfoComponent name={"humidity"} value={weather?.main?.humidity + " %"} />
+                <WeatherInfoComponent name={"wind"} value={weather?.wind?.speed + " m/s"} />
+                <WeatherInfoComponent name={"pressure"} value={weather?.main?.pressure + " hPa"} />
+            </container>
+            <div className='aqiContainer'>
+            <button id="aqiButton" onClick={() => setbooten(true)}>What's the air like <lord-icon
+                src="https://cdn.lordicon.com/njjuilvq.json"
+                trigger="hover"
+                delay="1000">
+            </lord-icon></button>
+            {booten ? (<AirQuality aqi={aqi} />) : null}
+            </div>
             
-            </>
-            
-            
-      
-        
+
+        </>
+
+
+
+
     );
 };
 

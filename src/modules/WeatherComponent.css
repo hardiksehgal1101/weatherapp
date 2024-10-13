@@ -43,11 +43,24 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: lavender;
   border-radius: 10px;
   margin-top: 24px;
   font-weight: bold;
+  max-width: 820px;
+  font-size: 14px;
+  cursor: pointer;
+
+  lord-icon {
+    height: 20px;
+  }
+}
+
+#aqiButton:hover{
+  background-color: rgb(173, 173, 247);
 }
 
 #WeatherInfoContainer{
@@ -87,6 +100,14 @@
     background-color: lavender;
     border-radius: 16px;
 }
+#aqInfoContainer {
+    #InfoContainer {
+        width: auto;
+        flex: 1 1 150px;
+        max-width: 200px;
+        justify-content: flex-start;
+    }
+}
 #InfoIcon{
     width: 20px;
     height: 20px;
@@ -104,12 +125,13 @@
 }
 
 #aqcondition{
-    margin: 15px auto;
+    margin: 20px 0;
+    text-align: center;
     text-transform: capitalize;
     font-size: 28px;
     font-weight: bold;
     background-color: lavender;
-    border-radius: 16px;
+    border-radius: 10px;
     padding: 12px;
 }
 #good{
@@ -131,15 +153,22 @@
     color: rgb(65, 14, 14);
 }
 #aqInfoContainer{
+    max-width: 820px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     flex-wrap: wrap;
     background-color: #E6E6FA;
     border-radius: 10px;
-    border: 2px dotted grey;
+    border: none;
  }
+
+.aqiContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 90%;
+}
  .side-icon{
     height: 40px;
     width: auto;
@@ -164,3 +193,10 @@
     }
 
  }
+
+ @media (min-width: 768px) {
+    #aqInfoContainer {
+      display: flex;
+      justify-content: space-evenly;
+    }
+  }
