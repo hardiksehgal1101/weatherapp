@@ -4,7 +4,6 @@ import perfectday from "..//icons/main.gif"
 
 
 const CityComponent = (props) => {
-  const { updateCity, fetchWeather } = props;
   return (
     <>
       {/*  */}
