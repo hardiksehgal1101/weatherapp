@@ -5,8 +5,8 @@ import CityComponent from "./modules/CityComponent";
 import WeatherComponent from "./modules/WeatherComponent";
 
 const AppId = process.env.REACT_APP_API_KEY;
-const XRapidAPIKey = process.env.RAPID_API_KEY;
-const XRapidAPIHost = process.env.RAPID_API_HOST;
+// const XRapidAPIKey = process.env.RAPID_API_KEY;
+// const XRapidAPIHost = process.env.RAPID_API_HOST;
 
 function App() {
   const [city, updateCity] = useState("");
@@ -18,44 +18,44 @@ function App() {
   const [submitted, setSubmitted] = useState(false);
 
   // Fetch city suggestions and validate them with OpenWeatherMap API
-  const fetchCitySuggestions = async (query) => {
-    if (!query.trim()) { // Check if the query is empty or contains only spaces
-      setSuggestions([]); // Clear suggestions
-      return;
-    }
-    try {
-      const response = await Axios.get(
-        `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${query}`,
-        {
-          headers: {
-            "X-RapidAPI-Key": XRapidAPIKey,
-            "X-RapidAPI-Host": XRapidAPIHost,
-          },
-        }
-      );
+  // const fetchCitySuggestions = async (query) => {
+  //   if (!query.trim()) { // Check if the query is empty or contains only spaces
+  //     setSuggestions([]); // Clear suggestions
+  //     return;
+  //   }
+  //   try {
+  //     const response = await Axios.get(
+  //       `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${query}`,
+  //       {
+  //         headers: {
+  //           "X-RapidAPI-Key": XRapidAPIKey,
+  //           "X-RapidAPI-Host": XRapidAPIHost,
+  //         },
+  //       }
+  //     );
 
-      const cityNames = response.data.data.map((city) => city.name);
+  //     const cityNames = response.data.data.map((city) => city.name);
 
-      // Validate cities with OpenWeatherMap API
-      const validCities = [];
-      for (const cityName of cityNames) {
-        try {
-          const validationResponse = await Axios.get(
-            `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${AppId}`
-          );
-          if (validationResponse.data && validationResponse.data.coord) {
-            validCities.push(cityName); // Add valid city to the list
-          }
-        } catch (error) {
-          console.error(`City ${cityName} is not valid in OpenWeatherMap API.`);
-        }
-      }
+  //     // Validate cities with OpenWeatherMap API
+  //     const validCities = [];
+  //     for (const cityName of cityNames) {
+  //       try {
+  //         const validationResponse = await Axios.get(
+  //           `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${AppId}`
+  //         );
+  //         if (validationResponse.data && validationResponse.data.coord) {
+  //           validCities.push(cityName); // Add valid city to the list
+  //         }
+  //       } catch (error) {
+  //         console.error(`City ${cityName} is not valid in OpenWeatherMap API.`);
+  //       }
+  //     }
 
-      setSuggestions(validCities); // Update suggestions with valid cities only
-    } catch (error) {
-      console.error("Error fetching city suggestions:", error);
-    }
-  };
+  //     setSuggestions(validCities); // Update suggestions with valid cities only
+  //   } catch (error) {
+  //     console.error("Error fetching city suggestions:", error);
+  //   }
+  // };
 
   const fetchWeather = async (e) => {
     e.preventDefault();
@@ -159,7 +159,7 @@ function App() {
           onChange={(e) => {
             const value = e.target.value.trim();
             updateCity(value);
-            fetchCitySuggestions(value); // Fetch suggestions as user types
+            // fetchCitySuggestions(value); // Fetch suggestions as user types
             if (value === "") {
               updateWeather(null); // Clear weather when input is empty
               updateAQI(null); // Clear AQI when input is empty

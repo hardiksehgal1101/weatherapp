@@ -16,7 +16,6 @@ import React from 'react'
 
 const AirQuality = (props) =>{
   const {aqi} = props; 
-  console.log(aqi);
     return (
         <>
         <div id="aqcondition">
