@@ -39,20 +39,24 @@
   text-decoration: none;
   border: none;
   padding: 15px;
-  color: #000;
+  color: white;
   text-transform: uppercase;
   letter-spacing: 2px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: lavender;
   border-radius: 10px;
   margin-top: 24px;
   font-weight: bold;
   max-width: 820px;
   font-size: 14px;
   cursor: pointer;
+  backdrop-filter: blur(10px); /* Frosted glass */
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
 
   lord-icon {
     height: 20px;
@@ -60,7 +64,9 @@
 }
 
 #aqiButton:hover{
-  background-color: rgb(173, 173, 247);
+  /* background-color: rgb(173, 173, 247); */
+  background: rgba(255, 255, 255, 0.2); /* more opaque on hover */
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1); /* subtle glow */
 }
 
 #WeatherInfoContainer{
@@ -99,13 +105,22 @@
     align-items: center;
     background-color: lavender;
     border-radius: 16px;
+    backdrop-filter: blur(10px); /* Frosted glass */
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  justify-content: center;
+  align-items: center;
 }
 #aqInfoContainer {
     #InfoContainer {
-        width: auto;
-        flex: 1 1 150px;
-        max-width: 200px;
+        width: 100%;
+        height: 100%;
         justify-content: flex-start;
+        margin: 0;
+
     }
 }
 #InfoIcon{
@@ -130,41 +145,54 @@
     text-transform: capitalize;
     font-size: 28px;
     font-weight: bold;
-    background-color: lavender;
+    /* background-color: lavender; */
+    backdrop-filter: blur(10px); /* Frosted glass */
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 10px;
     padding: 12px;
 }
-#good{
-    color: rgb(3, 99, 3);
+#good {
+    color: rgba(72, 201, 176, 0.9); /* muted teal/green */
 }
-#satisfactory{
-    color: rgb(201, 201, 0);
+
+#satisfactory {
+    color: rgba(241, 196, 15, 0.9); /* soft yellow */
 }
-#moderate{
-    color: rgb(141, 92, 0);
+
+#moderate {
+    color: rgba(230, 126, 34, 0.9); /* warm orange */
 }
-#poor{
-    color:rgb(114, 0, 0)
+
+#poor {
+    color: rgba(231, 76, 60, 0.9); /* soft red */
 }
-#verypoor{
-    color:rgb(102, 1, 102);
+
+#verypoor {
+    color: rgba(155, 89, 182, 0.9); /* muted purple */
 }
-#severe{
-    color: rgb(65, 14, 14);
+
+#severe {
+    color: rgba(192, 57, 43, 0.9); /* deep red/burgundy */
 }
 #aqInfoContainer{
-    max-width: 820px;
-    display: flex;
-    flex-direction: row;
+    /* display: flex; */
+    /* flex-direction: row; */
     justify-content: space-evenly;
     align-items: center;
     flex-wrap: wrap;
-    background-color: #E6E6FA;
+    /* background-color: #E6E6FA; */
     border-radius: 10px;
     border: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: max-content;
+    gap: 20px;
  }
 
 .aqiContainer {
+    width: 100%;
     display: flex;
     flex-direction: column;
     max-width: 90%;

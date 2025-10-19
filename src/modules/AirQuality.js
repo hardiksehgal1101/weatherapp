@@ -1,18 +1,18 @@
 import React from 'react'
-import pressure from '../../src/icons/bullet.png'
+// import pressure from '../../src/icons/bullet.png'
 
-const WeatherInfoComponent = (props) => {
-  const {name, value} = props;
-  return (
-      <container id="InfoContainer">
-          <img alt="aqiinfologo" id="InfoIcon" src={pressure}/>
-          <span id="InfoLabel">
-              {value}
-              <span>{name}</span>
-          </span>
-      </container>
-  );
-};
+// const WeatherInfoComponent = (props) => {
+//   const {name, value} = props;
+//   return (
+//       <container id="InfoContainer">
+//           <img alt="aqiinfologo" id="InfoIcon" src={pressure}/>
+//           <span id="InfoLabel">
+//               {value}
+//               <span>{name}</span>
+//           </span>
+//       </container>
+//   );
+// };
 
 const AirQuality = (props) =>{
   const {aqi} = props; 
@@ -56,7 +56,7 @@ const AirQuality = (props) =>{
 
 })()}</div>
 
-        <container id="aqInfoContainer">
+        {/* <container id="aqInfoContainer">
             <WeatherInfoComponent name={"Carbon Monoxide"}
                                   value={aqi?.components?.co + " µg/m³"}/>
             <WeatherInfoComponent name={"ammonia"} value={aqi?.components?.nh3 + " µg/m³"}/>
@@ -64,7 +64,7 @@ const AirQuality = (props) =>{
             <WeatherInfoComponent name={"Ozone"} value={aqi?.components?.o3 + " µg/m³"}/>
             <WeatherInfoComponent name={"PM 10"} value={aqi?.components?.pm10 + " µg/m³"}/>
             <WeatherInfoComponent name={"PM 2.5"} value={aqi?.components?.pm2_5 + " µg/m³"}/>
-        </container>
+        </container> */}
       </>
     )
 }

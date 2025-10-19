@@ -3,9 +3,11 @@ import Axios from "axios";
 import './App.css';
 import CityComponent from "./modules/CityComponent";
 import WeatherComponent from "./modules/WeatherComponent";
+// import backgroundComponent from "./modules/backgroundComponent";
 
 
 const AppId = process.env.REACT_APP_API_KEY;
+
 
 function App() {
   const [city, updateCity] = useState("");
@@ -101,14 +103,9 @@ function App() {
   }, []);
 
   return (
-    <div id="Container">
+    <div id="Container" className={!weather ? 'center-container' : ''}>
       <span id="AppLabel">
         Weathernest
-        <lord-icon
-          src="https://cdn.lordicon.com/uvextprq.json"
-          trigger="loop"
-          delay="5000"
-        />
       </span>
       <form id="SearchBox" onSubmit={fetchWeather}>
         <input

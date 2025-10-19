@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import './WeatherComponent.css'
 import AirQuality from "./AirQuality";
+// import AQIBar from "./AQIBar";
 
 const WeatherIcons = {
     "01d": "../icons/sunny.png",
@@ -64,7 +65,7 @@ const WeatherComponent = (props) => {
                     <span className="temperature">{`${Math.floor(weather?.main?.temp)}°C`}</span>
                     <div className="weather-desc">
                         {`${weather?.weather[0].description}`}
-                        <img className="side-icon" src={WeatherIcons[icon]} /></div>
+                        <img className="side-icon" src={WeatherIcons[icon]} alt="Weather icon" /></div>
                 </container>
 
             </container>
@@ -75,7 +76,7 @@ const WeatherComponent = (props) => {
 
             <container id="WeatherInfoContainer">
                 <WeatherInfoComponent name={isDay ? "sunset" : "sunrise"}
-                    value={`${getTime(weather?.sys[isDay ? "sunset" : "sunrise"])}` + " hrs"} />
+                    value={`${getTime(weather?.sys[isDay ? "sunset" : "sunrise"])} hrs`} />
                 <WeatherInfoComponent name={"humidity"} value={weather?.main?.humidity + " %"} />
                 <WeatherInfoComponent name={"wind"} value={weather?.wind?.speed + " m/s"} />
                 <WeatherInfoComponent name={"pressure"} value={weather?.main?.pressure + " hPa"} />
@@ -84,9 +85,11 @@ const WeatherComponent = (props) => {
             <button id="aqiButton" onClick={() => setbooten(true)}>What's the air like <lord-icon
                 src="https://cdn.lordicon.com/njjuilvq.json"
                 trigger="hover"
+                colors="primary:#ffffff,secondary:#ffffff"
                 delay="1000">
             </lord-icon></button>
             {booten ? (<AirQuality aqi={aqi} />) : null}
+            {/* {booten ? (<AQIBar aqi={aqi} />) : null} */}
             </div>
             
 

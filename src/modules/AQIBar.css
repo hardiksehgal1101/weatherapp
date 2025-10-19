@@ -1,0 +1,53 @@
+.aqi-container {
+    width: 90%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin: 0 auto;
+  }
+  
+  .aqi-info {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .aqi-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  .aqi-label {
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.7);
+  }
+  
+  /* AQI colors */
+  .aqi-number.good, .progress-bar-fill.good { color: rgb(3, 99, 3); background-color: rgb(3, 99, 3); }
+  .aqi-number.satisfactory, .progress-bar-fill.satisfactory { color: rgb(201, 201, 0); background-color: rgb(201, 201, 0); }
+  .aqi-number.moderate, .progress-bar-fill.moderate { color: rgb(141, 92, 0); background-color: rgb(141, 92, 0); }
+  .aqi-number.poor, .progress-bar-fill.poor { color: rgb(114, 0, 0); background-color: rgb(114, 0, 0); }
+  .aqi-number.verypoor, .progress-bar-fill.verypoor { color: rgb(102, 1, 102); background-color: rgb(102, 1, 102); }
+  .aqi-number.severe, .progress-bar-fill.severe { color: rgb(65, 14, 14); background-color: rgb(65, 14, 14); }
+  
+  /* Progress bar */
+  .progress-bar-bg {
+    width: 100%;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  
+  .progress-bar-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 6px;
+  }
+  

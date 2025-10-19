@@ -14,12 +14,18 @@
 #SearchBox{
     display:flex;
     flex-direction:row;
-    color:black;
+    justify-content: space-between;
+    color:white;
     font-size:25px;
     font-weight:bold;
     margin:20px auto;
-    background-color: lavender;
+    /* background-color: lavender; */
     border-radius: 16px;
+    backdrop-filter: blur(10px); /* Frosted glass */
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    width: 100%;
+    max-width: 90%;
 }
 #SearchBox>input{
     padding:10px;
@@ -28,9 +34,17 @@
     outline:none;
     font-weight:bold;
     border: none;
-    background-color: lavender;
+    color: white;
+    /* background-color: lavender; */
     border-radius: 20px;
+    background: none;
+    letter-spacing: 2px;
 }
+#SearchBox>input::placeholder {
+    color: white;
+    opacity: 0.7; /* optional: make it slightly transparent */
+}
+
 #SearchBox>button{
     padding:10px;
     font-size:14px;

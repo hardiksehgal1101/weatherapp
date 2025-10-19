@@ -1,21 +1,49 @@
+
 #Container{
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: auto;
   border-radius: 4px;
-  background: white;
   font-family: montserrat;
+  color: white;
+  max-width: 60%;
 }
-#AppLabel{
-    color: black;
-  margin: 20px auto;
-  font-size: 18px;
-  font-weight: bold;
 
+.center-container {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+}
+
+html {
+  /* background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); */
+  height: auto;
+}
+
+#AppLabel{
+  color: white;
+  margin: 20px auto;
+  font-size: 50px;
+  font-weight: bold;
+  font-family: 'Krabby','montserrat',  sans-serif;
 }
 #copyright{
   align-items: flex-start;
   font-size: 12px;
   padding: 10px;
+}
+
+@media (max-width: 768px) {
+  #Container {
+    max-width: 100%;       /* full width on mobile */
+  }
+}
+
+@font-face {
+  font-family: 'Krabby';
+  src: url('./fonts/Krabby\ Patty.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
