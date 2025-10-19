@@ -3,19 +3,59 @@ import Axios from "axios";
 import './App.css';
 import CityComponent from "./modules/CityComponent";
 import WeatherComponent from "./modules/WeatherComponent";
-// import backgroundComponent from "./modules/backgroundComponent";
-
 
 const AppId = process.env.REACT_APP_API_KEY;
-
+const XRapidAPIKey = process.env.RAPID_API_KEY;
+const XRapidAPIHost = process.env.RAPID_API_HOST;
 
 function App() {
   const [city, updateCity] = useState("");
+  const [suggestions, setSuggestions] = useState([]); // State for city suggestions
   const [weather, updateWeather] = useState(null);
   const [aqi, updateAQI] = useState(null);
   const [forecast, updateForecast] = useState(null);
   const [loading, setLoading] = useState(false); // State to manage loading
   const [submitted, setSubmitted] = useState(false);
+
+  // Fetch city suggestions and validate them with OpenWeatherMap API
+  const fetchCitySuggestions = async (query) => {
+    if (!query.trim()) { // Check if the query is empty or contains only spaces
+      setSuggestions([]); // Clear suggestions
+      return;
+    }
+    try {
+      const response = await Axios.get(
+        `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${query}`,
+        {
+          headers: {
+            "X-RapidAPI-Key": XRapidAPIKey,
+            "X-RapidAPI-Host": XRapidAPIHost,
+          },
+        }
+      );
+
+      const cityNames = response.data.data.map((city) => city.name);
+
+      // Validate cities with OpenWeatherMap API
+      const validCities = [];
+      for (const cityName of cityNames) {
+        try {
+          const validationResponse = await Axios.get(
+            `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${AppId}`
+          );
+          if (validationResponse.data && validationResponse.data.coord) {
+            validCities.push(cityName); // Add valid city to the list
+          }
+        } catch (error) {
+          console.error(`City ${cityName} is not valid in OpenWeatherMap API.`);
+        }
+      }
+
+      setSuggestions(validCities); // Update suggestions with valid cities only
+    } catch (error) {
+      console.error("Error fetching city suggestions:", error);
+    }
+  };
 
   const fetchWeather = async (e) => {
     e.preventDefault();
@@ -23,11 +63,16 @@ function App() {
     setSubmitted(true);
 
     try {
-      const response = await Axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${AppId}&units=metric`
+      // Validate city with OpenWeatherMap API
+      const validationResponse = await Axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${AppId}`
       );
 
-      const { lat, lon } = response.data.coord;
+      if (!validationResponse.data || !validationResponse.data.coord) {
+        throw new Error("City not found in OpenWeatherMap API");
+      }
+
+      const { lat, lon } = validationResponse.data.coord;
 
       // Fetch forecast and air quality data concurrently
       const [forecastResponse, airQualityResponse] = await Promise.all([
@@ -40,12 +85,12 @@ function App() {
       ]);
 
       // Update states with fetched data
-      updateWeather(response.data);
+      updateWeather(validationResponse.data);
       updateAQI(airQualityResponse.data.list[0]);
       updateForecast(forecastResponse.data);
-      console.log(forecastResponse)
     } catch (error) {
       console.error("Error fetching weather data:", error);
+      alert("City not found or weather data unavailable. Please try another city.");
     } finally {
       setLoading(false);
     }
@@ -110,15 +155,17 @@ function App() {
       <form id="SearchBox" onSubmit={fetchWeather}>
         <input
           required
+          value={city}
           onChange={(e) => {
-          const value = e.target.value.trim()
-          updateCity(value)
-          if (value === "") {
-            updateWeather(null); // Clear weather when input is empty
-            updateAQI(null); // Clear AQI when input is empty
-            updateForecast(null); // Clear forecast when input is empty
-          }
-        }} // Use trim to avoid leading spaces
+            const value = e.target.value.trim();
+            updateCity(value);
+            fetchCitySuggestions(value); // Fetch suggestions as user types
+            if (value === "") {
+              updateWeather(null); // Clear weather when input is empty
+              updateAQI(null); // Clear AQI when input is empty
+              updateForecast(null); // Clear forecast when input is empty
+            }
+          }} // Use trim to avoid leading spaces
           placeholder="Enter City"
         />
         <button type="submit">
@@ -127,6 +174,22 @@ function App() {
             trigger="hover"
           />
         </button>
+        {/* Render city suggestions */}
+        {suggestions.length > 0 && (
+          <ul className="suggestions-list">
+            {suggestions.map((suggestion, index) => (
+              <li
+                key={index}
+                onClick={() => {
+                  updateCity(suggestion); // Update city with selected suggestion
+                  setSuggestions([]); // Clear suggestions
+                }}
+              >
+                {suggestion}
+              </li>
+            ))}
+          </ul>
+        )}
       </form>
       {loading ? (
         <p>Loading...</p>

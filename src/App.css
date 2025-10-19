@@ -1,4 +1,3 @@
-
 #Container{
   display: flex;
   flex-direction: column;
@@ -32,6 +31,14 @@ html {
   align-items: flex-start;
   font-size: 12px;
   padding: 10px;
+  z-index: 1; /* Lower z-index to ensure it stays behind the suggestions list */
+  position: fixed; /* Fix it to the bottom of the viewport */
+  bottom: 0; /* Align it to the bottom */
+  left: 0; /* Align it to the left */
+  width: 100%; /* Make it span the full width */
+  text-align: center; /* Center the text horizontally */
+  background: rgba(0, 0, 0, 0.5); /* Optional: Add a semi-transparent background */
+  color: white; /* Ensure the text is visible */
 }
 
 @media (max-width: 768px) {
@@ -46,4 +53,37 @@ html {
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+}
+
+.suggestions-list {
+  display: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for glass effect */
+  max-height: 150px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 2); /* Glass morphism background */
+  backdrop-filter: blur(10px); /* Blur effect for glass morphism */
+  -webkit-backdrop-filter: blur(10px);
+  color: black;
+  position: absolute;
+  z-index: 1000; /* Ensure it appears above other elements */
+  width: 100%;
+  border-radius: 16px; /* Rounded corners */
+  margin-top: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  top: 100%; /* Position below the input field */
+  left: 0; /* Align with the input field */
+  overflow: clip;
+}
+
+.suggestions-list li {
+  padding: 10px;
+  cursor: pointer;
+  color: white; /* Text color for better contrast */
+}
+
+.suggestions-list li:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Slightly darker hover effect */
 }
