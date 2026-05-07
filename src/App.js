@@ -188,7 +188,7 @@ function App() {
         Weathernest
       </motion.span>
 
-      <div className="search-container">
+      <div className="search-container" ref={searchRef}>
         <form id="SearchBox" onSubmit={fetchWeather}>
           <input
             required
