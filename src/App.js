@@ -248,7 +248,7 @@ function App() {
               />
             </button>
           </div>
-        </form>
+        </motion.form>
 
         <AnimatePresence>
           {suggestions.length > 0 && (
