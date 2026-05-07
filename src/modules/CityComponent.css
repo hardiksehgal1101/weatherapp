@@ -1,65 +1,41 @@
-#WeatherLogo{
-    width:90%;
-    height:auto;
-    margin:50px 50px;
+.welcome-container {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    max-width: 500px;
 }
 
-#ChooseCityLabel{
-    color:black;
-    font-size:20px;
-    font-weight:bolder;
-    margin:10px 10px;
+.welcome-content h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: white;
 }
 
-#SearchBox{
-    display:flex;
-    flex-direction:row;
-    justify-content: space-between;
-    color:white;
-    font-size:25px;
-    font-weight:bold;
-    margin:20px auto;
-    /* background-color: lavender; */
-    border-radius: 16px;
-    backdrop-filter: blur(10px); /* Frosted glass */
-    -webkit-backdrop-filter: blur(10px);
+.welcome-content p {
+    font-size: 16px;
+    opacity: 0.8;
+    margin-bottom: 30px;
+}
+
+.popular-cities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.city-btn {
     background: rgba(255, 255, 255, 0.1);
-    width: 100%;
-    max-width: 90%;
-}
-#SearchBox>input{
-    padding:10px;
-    font-size:14px;
-    border:none;
-    outline:none;
-    font-weight:bold;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
-    /* background-color: lavender; */
+    padding: 8px 20px;
     border-radius: 20px;
-    background: none;
-    letter-spacing: 2px;
-}
-#SearchBox>input::placeholder {
-    color: white;
-    opacity: 0.7; /* optional: make it slightly transparent */
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 14px;
 }
 
-#SearchBox>button{
-    padding:10px;
-    font-size:14px;
-    border:none;
-    outline:none;
-    font-weight:bold;
-    cursor:pointer;
-    border-radius: 0px 16px 16px 0px;
-}
-
-@media screen and (min-width: 480px) {
-    #WeatherLogo{
-        height: 400px;
-        width: auto;
-        margin: 0;
-    }
-    
+.city-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
 }

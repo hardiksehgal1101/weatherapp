@@ -1,89 +1,175 @@
-#Container{
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'montserrat', sans-serif;
+  overflow-x: hidden;
+  color: white;
+}
+
+#Container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: auto;
-  border-radius: 4px;
-  font-family: montserrat;
-  color: white;
-  max-width: 60%;
+  width: 100%;
+  max-width: 600px;
+  padding: 15px;
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
 }
 
 .center-container {
-  display: flex;
-  min-height: 100vh;
-  justify-content: center;
+  /* Inherits from body centering */
 }
 
-html {
-  /* background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); */
-  height: auto;
-}
-
-#AppLabel{
+#AppLabel {
   color: white;
-  margin: 20px auto;
-  font-size: 50px;
+  margin-bottom: 30px;
+  font-size: clamp(32px, 8vw, 48px);
   font-weight: bold;
-  font-family: 'Krabby','montserrat',  sans-serif;
-}
-#copyright{
-  align-items: flex-start;
-  font-size: 12px;
-  padding: 10px;
-  z-index: 1; /* Lower z-index to ensure it stays behind the suggestions list */
-  position: fixed; /* Fix it to the bottom of the viewport */
-  bottom: 0; /* Align it to the bottom */
-  left: 0; /* Align it to the left */
-  width: 100%; /* Make it span the full width */
-  text-align: center; /* Center the text horizontally */
-  background: rgba(0, 0, 0, 0.5); /* Optional: Add a semi-transparent background */
-  color: white; /* Ensure the text is visible */
+  font-family: 'Krabby', 'montserrat', sans-serif;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  text-align: center;
 }
 
-@media (max-width: 768px) {
-  #Container {
-    max-width: 100%;       /* full width on mobile */
-  }
+.search-container {
+  width: 100%;
+  max-width: 450px;
+  position: relative;
+  z-index: 100;
 }
 
-@font-face {
-  font-family: 'Krabby';
-  src: url('./fonts/Krabby\ Patty.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+#SearchBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 25px;
+  padding: 8px 20px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .suggestions-list {
-  display: none;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for glass effect */
-  max-height: 150px;
-  overflow-y: auto;
-  background: rgba(255, 255, 255, 2); /* Glass morphism background */
-  backdrop-filter: blur(10px); /* Blur effect for glass morphism */
-  -webkit-backdrop-filter: blur(10px);
-  color: black;
   position: absolute;
-  z-index: 1000; /* Ensure it appears above other elements */
+  top: 110%;
+  left: 0;
   width: 100%;
-  border-radius: 16px; /* Rounded corners */
-  margin-top: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  top: 100%; /* Position below the input field */
-  left: 0; /* Align with the input field */
-  overflow: clip;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-radius: 20px;
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  overflow: hidden;
 }
 
 .suggestions-list li {
-  padding: 10px;
+  padding: 12px 20px;
   cursor: pointer;
-  color: white; /* Text color for better contrast */
+  font-size: 14px;
+  transition: 0.3s;
+  color: white;
 }
 
 .suggestions-list li:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* Slightly darker hover effect */
+  background: rgba(255, 255, 255, 0.2);
+  padding-left: 25px;
 }
+
+#SearchBox:focus-within {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
+}
+
+#SearchBox input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 10px;
+  flex: 1;
+  font-size: 16px;
+}
+
+#SearchBox input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-btn, .geo-btn, .home-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.search-btn:hover, .geo-btn:hover, .home-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.search-history {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.history-chip {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.history-chip:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+#copyright {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+  font-size: 11px;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.6);
+  z-index: 10;
+}

@@ -1,230 +1,211 @@
-
-#tempContainer{
-    display: flex;
-   width: 100%;
-   margin:auto;
-   flex-direction: row;
-   justify-content: space-between;
-   align-items: center;
-   font-size: 100px;
-   
-}
-
-#condition{
-    margin: auto;
-    text-transform: capitalize;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-.temperature{
-    font-size: 40px;
-}
-.weather-desc{
-    display: flex;
-    align-items: center;
-    margin: 4px;
-    font-size: 20px;
-}
-#condition>div{
-    display: flex;
-    align-items: center;
-}
-#condition >img{
-    padding: 10px;
-    align-items: center;
-}
-#aqiButton{
-  text-decoration: none;
-  border: none;
-  padding: 15px;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  margin-top: 24px;
-  font-weight: bold;
-  max-width: 820px;
-  font-size: 14px;
-  cursor: pointer;
-  backdrop-filter: blur(10px); /* Frosted glass */
-  -webkit-backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-
-
-  lord-icon {
-    height: 20px;
-  }
-}
-
-#aqiButton:hover{
-  /* background-color: rgb(173, 173, 247); */
-  background: rgba(255, 255, 255, 0.2); /* more opaque on hover */
-    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1); /* subtle glow */
-}
-
-#WeatherInfoContainer{
- display: flex;
-  flex-direction: row;
-  justify-content: space-around ;
-  align-items: center;
-  flex-wrap: wrap;
-  font-weight: 500;
-}
-
-#Location{
-    margin: 15px auto;
-    text-transform: capitalize;
-    font-size: 28px;
-    font-weight: bold;
-}
-#WeatherInfoLabel{
-    text-transform: capitalize;
-    text-align: center;
-    width: 90%;
-    font-weight: bold;
-    font-size: 14px;
-}
-#WeatherIcon{
-    width: 100px;
-    height: 100px;
-    margin: 5px auto;
-}
-#InfoContainer{
-    width: 150px;
-    display: flex;
-    margin: 10px;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: lavender;
-    border-radius: 16px;
-    backdrop-filter: blur(10px); /* Frosted glass */
-  -webkit-backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  justify-content: center;
-  align-items: center;
-}
-#aqInfoContainer {
-    #InfoContainer {
-        width: 100%;
-        height: 100%;
-        justify-content: flex-start;
-        margin: 0;
-
-    }
-}
-#InfoIcon{
-    width: 20px;
-    height: 20px;
-}
-#InfoLabel{
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
-    margin: 15px;
-    font-weight: 600;
-}
-#InfoLabel>span{
-    font-size: 12px;
-    text-transform: capitalize;
-}
-
-#aqcondition{
-    margin: 20px 0;
-    text-align: center;
-    text-transform: capitalize;
-    font-size: 28px;
-    font-weight: bold;
-    /* background-color: lavender; */
-    backdrop-filter: blur(10px); /* Frosted glass */
-  -webkit-backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    padding: 12px;
-}
-#good {
-    color: rgba(72, 201, 176, 0.9); /* muted teal/green */
-}
-
-#satisfactory {
-    color: rgba(241, 196, 15, 0.9); /* soft yellow */
-}
-
-#moderate {
-    color: rgba(230, 126, 34, 0.9); /* warm orange */
-}
-
-#poor {
-    color: rgba(231, 76, 60, 0.9); /* soft red */
-}
-
-#verypoor {
-    color: rgba(155, 89, 182, 0.9); /* muted purple */
-}
-
-#severe {
-    color: rgba(192, 57, 43, 0.9); /* deep red/burgundy */
-}
-#aqInfoContainer{
-    /* display: flex; */
-    /* flex-direction: row; */
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-    /* background-color: #E6E6FA; */
-    border-radius: 10px;
-    border: none;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: max-content;
-    gap: 20px;
- }
-
-.aqiContainer {
+.weather-card {
     width: 100%;
+    max-width: 550px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 25px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
-    max-width: 90%;
+    gap: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    color: white;
+    overflow: hidden;
 }
- .side-icon{
-    height: 40px;
-    width: auto;
-    margin-left: 8px;
- }
-/* desktop */
- @media screen and (min-width: 480px) {
-    #WeatherInfoContainer{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly ;
-        align-items: center;
-        flex-wrap: wrap;
-        font-weight: 500;
-    }
-    #InfoContainer{
-        padding: 20px;
-    }
-    #InfoIcon{
-        width: 40px;
-        height: 40px;
-    }
 
- }
-
- @media (min-width: 768px) {
-    #aqInfoContainer {
-      display: flex;
-      justify-content: space-evenly;
+@media (max-width: 480px) {
+    .weather-card {
+        padding: 15px;
     }
-  }
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+#Location {
+    font-size: clamp(18px, 5vw, 24px);
+    font-weight: 500;
+    margin-bottom: 0;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 120px;
+    flex: 1;
+}
+
+.unit-toggle-pill {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    padding: 4px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.unit-toggle-pill:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.unit-toggle-pill span {
+    opacity: 0.5;
+    transition: 0.3s;
+}
+
+.unit-toggle-pill span.active {
+    opacity: 1;
+}
+
+.unit-toggle-pill .divider {
+    margin: 0 6px;
+    opacity: 0.2;
+}
+
+.main-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.temp-section {
+    display: flex;
+    flex-direction: column;
+    min-width: 140px;
+}
+
+.temp-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.temperature {
+    font-size: clamp(48px, 10vw, 64px);
+    font-weight: bold;
+}
+
+.feels-like {
+    font-size: 16px;
+    opacity: 0.7;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+
+.weather-desc {
+    font-size: 18px;
+    text-transform: capitalize;
+    opacity: 0.8;
+}
+
+.weather-icon {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 15px rgba(255,255,255,0.4));
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 380px) {
+    .info-grid {
+        gap: 10px;
+    }
+    .info-tile {
+        padding: 10px !important;
+        gap: 8px !important;
+    }
+}
+
+.info-tile {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    justify-content: center;
+    min-width: 0;
+}
+
+.info-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info-value {
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+}
+
+.info-label {
+    font-size: 10px;
+    opacity: 0.7;
+    text-transform: capitalize;
+    color: white;
+    text-align: center;
+}
+
+.aqi-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 25px;
+    margin-top: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.aqi-header {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    opacity: 0.8;
+    color: white;
+}
+
+.back-to-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 12px;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.back-to-top:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}

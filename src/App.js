@@ -1,206 +1,304 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Axios from "axios";
+import { motion, AnimatePresence } from "framer-motion";
 import './App.css';
 import CityComponent from "./modules/CityComponent";
 import WeatherComponent from "./modules/WeatherComponent";
+import SkeletonLoader from "./modules/SkeletonLoader";
+import ErrorMessage from "./modules/ErrorMessage";
 
 const AppId = process.env.REACT_APP_API_KEY;
-// const XRapidAPIKey = process.env.RAPID_API_KEY;
-// const XRapidAPIHost = process.env.RAPID_API_HOST;
+const isGeoEnabled = process.env.REACT_APP_ENABLE_GEOLOCATION !== 'false';
 
 function App() {
   const [city, updateCity] = useState("");
-  const [suggestions, setSuggestions] = useState([]); // State for city suggestions
+  const [suggestions, setSuggestions] = useState([]);
   const [weather, updateWeather] = useState(null);
   const [aqi, updateAQI] = useState(null);
   const [forecast, updateForecast] = useState(null);
-  const [loading, setLoading] = useState(false); // State to manage loading
-  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [unit, setUnit] = useState("metric"); // metric for Celsius, imperial for Fahrenheit
+  const [searchHistory, setSearchHistory] = useState([]);
+  const searchRef = useRef(null);
 
-  // Fetch city suggestions and validate them with OpenWeatherMap API
-  // const fetchCitySuggestions = async (query) => {
-  //   if (!query.trim()) { // Check if the query is empty or contains only spaces
-  //     setSuggestions([]); // Clear suggestions
-  //     return;
-  //   }
-  //   try {
-  //     const response = await Axios.get(
-  //       `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${query}`,
-  //       {
-  //         headers: {
-  //           "X-RapidAPI-Key": XRapidAPIKey,
-  //           "X-RapidAPI-Host": XRapidAPIHost,
-  //         },
-  //       }
-  //     );
+  // Load search history from local storage
+  useEffect(() => {
+    const history = JSON.parse(localStorage.getItem("weatherSearchHistory")) || [];
+    setSearchHistory(history);
 
-  //     const cityNames = response.data.data.map((city) => city.name);
+    // Outside click listener for suggestions
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setSuggestions([]);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-  //     // Validate cities with OpenWeatherMap API
-  //     const validCities = [];
-  //     for (const cityName of cityNames) {
-  //       try {
-  //         const validationResponse = await Axios.get(
-  //           `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${AppId}`
-  //         );
-  //         if (validationResponse.data && validationResponse.data.coord) {
-  //           validCities.push(cityName); // Add valid city to the list
-  //         }
-  //       } catch (error) {
-  //         console.error(`City ${cityName} is not valid in OpenWeatherMap API.`);
-  //       }
-  //     }
+  const saveToHistory = (cityName) => {
+    if (!cityName) return;
+    const updatedHistory = [cityName, ...searchHistory.filter(c => c !== cityName)].slice(0, 5);
+    setSearchHistory(updatedHistory);
+    localStorage.setItem("weatherSearchHistory", JSON.stringify(updatedHistory));
+  };
 
-  //     setSuggestions(validCities); // Update suggestions with valid cities only
-  //   } catch (error) {
-  //     console.error("Error fetching city suggestions:", error);
-  //   }
-  // };
+  const resetApp = () => {
+    updateWeather(null);
+    updateAQI(null);
+    updateForecast(null);
+    updateCity("");
+    setSuggestions([]);
+    setError(null);
+  };
 
-  const fetchWeather = async (e) => {
-    e.preventDefault();
-    setLoading(true); // Start loading when the form is submitted
-    setSubmitted(true);
+  const toggleUnit = () => {
+    setUnit(prev => prev === "metric" ? "imperial" : "metric");
+  };
+
+  const fetchSuggestions = async (query) => {
+    if (query.length < 3) {
+      setSuggestions([]);
+      return;
+    }
+    try {
+      const response = await Axios.get(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${AppId}`
+      );
+      setSuggestions(response.data);
+    } catch (err) {
+      console.error("Error fetching suggestions:", err);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    updateCity(value);
+    fetchSuggestions(value);
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    const cityName = `${suggestion.name}, ${suggestion.country}`;
+    updateCity(cityName);
+    setSuggestions([]);
+    fetchWeather(null, cityName);
+  };
+
+  const fetchWeather = async (e, cityParam) => {
+    if (e) e.preventDefault();
+    const searchCity = cityParam || city;
+    if (!searchCity) return;
+
+    setLoading(true);
+    setError(null);
 
     try {
-      // Validate city with OpenWeatherMap API
       const validationResponse = await Axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${AppId}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${AppId}&units=${unit}`
       );
-
-      if (!validationResponse.data || !validationResponse.data.coord) {
-        throw new Error("City not found in OpenWeatherMap API");
-      }
 
       const { lat, lon } = validationResponse.data.coord;
 
-      // Fetch forecast and air quality data concurrently
       const [forecastResponse, airQualityResponse] = await Promise.all([
         Axios.get(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${AppId}&units=metric`
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${AppId}&units=${unit}`
         ),
         Axios.get(
           `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${AppId}`
         ),
       ]);
 
-      // Update states with fetched data
       updateWeather(validationResponse.data);
       updateAQI(airQualityResponse.data.list[0]);
       updateForecast(forecastResponse.data);
-    } catch (error) {
-      console.error("Error fetching weather data:", error);
-      alert("City not found or weather data unavailable. Please try another city.");
+      saveToHistory(validationResponse.data.name);
+    } catch (err) {
+      console.error("Error fetching weather data:", err);
+      setError("City not found or weather data unavailable.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Get user's location on component mount
+  // Re-fetch weather when unit changes
   useEffect(() => {
+    if (weather?.name) {
+      fetchWeather(null, weather.name);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [unit]);
+
+  useEffect(() => {
+    if (!isGeoEnabled) return;
+
     const getLocation = async () => {
       setLoading(true);
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           async (position) => {
             const { latitude, longitude } = position.coords;
-            // Fetch weather data based on geolocation
             try {
               const response = await Axios.get(
-                `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${AppId}&units=metric`
+                `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${AppId}&units=${unit}`
               );
 
               const { lat, lon } = response.data.coord;
 
-              // Fetch forecast and air quality data concurrently
               const [forecastResponse, airQualityResponse] = await Promise.all([
                 Axios.get(
-                  `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${AppId}&units=metric`
+                  `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${AppId}&units=${unit}`
                 ),
                 Axios.get(
                   `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${AppId}`
                 ),
               ]);
 
-              // Update states with fetched data
               updateWeather(response.data);
               updateAQI(airQualityResponse.data.list[0]);
               updateForecast(forecastResponse.data);
-            } catch (error) {
-              console.error("Error fetching geolocation weather data:", error);
+            } catch (err) {
+              console.error("Error fetching geolocation weather data:", err);
             } finally {
               setLoading(false);
             }
           },
-          (error) => {
-            console.log("Geolocation is not enabled");
-            console.error(error);
+          () => {
             setLoading(false);
           }
         );
       } else {
-        console.log("Geolocation is not supported by this browser.");
         setLoading(false);
       }
     };
 
     getLocation();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isGeoEnabled]);
 
   return (
-    <div id="Container" className={!weather ? 'center-container' : ''}>
-      <span id="AppLabel">
+    <div id="Container">
+      <ErrorMessage message={error} onClose={() => setError(null)} />
+      
+      <motion.span 
+        id="AppLabel"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
         Weathernest
-      </span>
-      <form id="SearchBox" onSubmit={fetchWeather}>
-        <input
-          required
-          value={city}
-          onChange={(e) => {
-            const value = e.target.value.trim();
-            updateCity(value);
-            // fetchCitySuggestions(value); // Fetch suggestions as user types
-            if (value === "") {
-              updateWeather(null); // Clear weather when input is empty
-              updateAQI(null); // Clear AQI when input is empty
-              updateForecast(null); // Clear forecast when input is empty
-            }
-          }} // Use trim to avoid leading spaces
-          placeholder="Enter City"
-        />
-        <button type="submit">
-          <lord-icon
-            src="https://cdn.lordicon.com/pvbutfdk.json"
-            trigger="hover"
+      </motion.span>
+
+      <div className="search-container">
+        <form id="SearchBox" onSubmit={fetchWeather}>
+          <input
+            required
+            value={city}
+            onChange={handleInputChange}
+            placeholder="Enter City"
           />
-        </button>
-        {/* Render city suggestions */}
-        {suggestions.length > 0 && (
-          <ul className="suggestions-list">
-            {suggestions.map((suggestion, index) => (
-              <li
-                key={index}
-                onClick={() => {
-                  updateCity(suggestion); // Update city with selected suggestion
-                  setSuggestions([]); // Clear suggestions
-                }}
-              >
-                {suggestion}
-              </li>
-            ))}
-          </ul>
-        )}
-      </form>
-      {loading ? (
-        <p>Loading...</p>
-      ) : submitted && city && weather ? (
-        <WeatherComponent weather={weather} city={city} aqi={aqi} forecast={forecast} />
-      ) : (
-        <CityComponent updateCity={updateCity} fetchWeather={fetchWeather} />
+          <div className="search-actions">
+            {weather && (
+              <button type="button" className="home-btn" onClick={resetApp}>
+                <lord-icon
+                    src="https://cdn.lordicon.com/osuxyevn.json"
+                    trigger="hover"
+                    style={{width:'20px',height:'20px'}}
+                  />
+              </button>
+            )}
+            {isGeoEnabled && (
+              <button type="button" className="geo-btn" onClick={() => window.location.reload()}>
+                <lord-icon
+                    src="https://cdn.lordicon.com/msetysan.json"
+                    trigger="hover"
+                    style={{width:'20px',height:'20px'}}
+                  />
+              </button>
+            )}
+            <button type="submit" className="search-btn">
+              <lord-icon
+                src="https://cdn.lordicon.com/pvbutfdk.json"
+                trigger="hover"
+                style={{width:'25px',height:'25px'}}
+              />
+            </button>
+          </div>
+        </form>
+
+        <AnimatePresence>
+          {suggestions.length > 0 && (
+            <motion.ul 
+              className="suggestions-list"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+            >
+              {suggestions.map((suggestion, index) => (
+                <li key={index} onClick={() => handleSuggestionClick(suggestion)}>
+                  {suggestion.name}, {suggestion.state && `${suggestion.state}, `}{suggestion.country}
+                </li>
+              ))}
+            </motion.ul>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {searchHistory.length > 0 && !weather && !loading && (
+        <div className="search-history">
+          {searchHistory.map((h, i) => (
+            <span key={i} onClick={() => fetchWeather(null, h)} className="history-chip">
+              {h}
+            </span>
+          ))}
+        </div>
       )}
+
+      <AnimatePresence mode="wait">
+        {loading ? (
+          <motion.div
+            key="loading"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+          >
+            <SkeletonLoader />
+          </motion.div>
+        ) : weather ? (
+          <motion.div
+            key="weather"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+          >
+            <WeatherComponent 
+              weather={weather} 
+              city={city} 
+              aqi={aqi} 
+              forecast={forecast} 
+              unit={unit} 
+              toggleUnit={toggleUnit}
+            />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="city"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+          >
+            <CityComponent updateCity={updateCity} fetchWeather={fetchWeather} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+
       <div id="copyright">©Hardiksehgal</div>
     </div>
   );
 }
 
 export default App;
+;
