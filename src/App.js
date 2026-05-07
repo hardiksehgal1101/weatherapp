@@ -18,7 +18,8 @@ function App() {
   const [forecast, updateForecast] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [unit, setUnit] = useState("metric"); // metric for Celsius, imperial for Fahrenheit
+  const [validationError, setValidationError] = useState(false);
+  const [unit, setUnit] = useState("metric");
   const [searchHistory, setSearchHistory] = useState([]);
   const searchRef = useRef(null);
 
@@ -88,7 +89,12 @@ function App() {
   const fetchWeather = async (e, cityParam) => {
     if (e) e.preventDefault();
     const searchCity = cityParam || city;
-    if (!searchCity) return;
+    
+    if (!searchCity) {
+      setValidationError(true);
+      setTimeout(() => setValidationError(false), 600);
+      return;
+    }
 
     setLoading(true);
     setError(null);
@@ -189,13 +195,32 @@ function App() {
       </motion.span>
 
       <div className="search-container" ref={searchRef}>
-        <form id="SearchBox" onSubmit={fetchWeather}>
-          <input
-            required
-            value={city}
-            onChange={handleInputChange}
-            placeholder="Enter City"
-          />
+        <motion.form 
+          id="SearchBox" 
+          onSubmit={fetchWeather}
+          animate={validationError ? { x: [-5, 5, -5, 5, 0], borderColor: "rgba(255, 0, 0, 0.5)" } : {}}
+          transition={{ duration: 0.4 }}
+          className={validationError ? 'error' : ''}
+        >
+          <div className="input-wrapper">
+            <input
+              value={city}
+              onChange={handleInputChange}
+              placeholder="Enter City"
+            />
+            <AnimatePresence>
+              {validationError && (
+                <motion.span 
+                  className="validation-msg"
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                >
+                  Please enter a city name
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </div>
           <div className="search-actions">
             {weather && (
               <button type="button" className="home-btn" onClick={resetApp}>
